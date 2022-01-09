@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, VERSION } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { Book } from "app/models/book";
 import { Reader } from "app/models/reader";
@@ -18,7 +19,8 @@ export class DashboardComponent implements OnInit {
   mostPopularBook: Book;
 
   constructor(private loggerService: LoggerService,
-    private dataService: DataService) { 
+    private dataService: DataService,
+    private title: Title) { 
     //this.loggerService.log('Creating the dashboard.');
   }
 
@@ -45,6 +47,8 @@ export class DashboardComponent implements OnInit {
     this.getAuthorRecommendationAsync(1);
     // alternative with in-line async function catch:
     //.catch(err => {})
+
+    this.title.setTitle(`Book Tracker (NG version: ${VERSION.full})`)
   }
 
   private async getAuthorRecommendationAsync(readerID: number): Promise<void> {
