@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditBookComponent } from './edit-book/edit-book.component';
 import { EditReaderComponent } from './edit-reader/edit-reader.component';
+import { BookTrackerErrorHandlerService } from './core/book-tracker-error-handler.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,10 @@ import { EditReaderComponent } from './edit-reader/edit-reader.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    // example of custom error handler replacing in-built Angular error handler:
+    { provide: ErrorHandler, useClass: BookTrackerErrorHandlerService }
+  ],
   // alternate providers DI syntax:
   // providers: [
   //  DataService,
