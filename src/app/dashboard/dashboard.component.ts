@@ -31,15 +31,29 @@ export class DashboardComponent implements OnInit {
     );    
     this.mostPopularBook = this.dataService.mostPopularBook;
 
-    this.dataService.getAuthorRecommendation(1)
-      .then(
-        (author: string) => {
-          this.loggerService.log(author);
-          // Uncomment to simulate an error:
-          //throw new Error('There was a problem!');
-        },
-        (err: string) => this.loggerService.error(`Promise rejected: ${err}`)
-      ).catch((error: Error) => this.loggerService.error(error.message));
+    // this.dataService.getAuthorRecommendation(1)
+    //   .then(
+    //     (author: string) => {
+    //       this.loggerService.log(author);
+    //       // Uncomment to simulate an error:
+    //       //throw new Error('There was a problem!');
+    //     },
+    //     (err: string) => this.loggerService.error(`Promise rejected: ${err}`)
+    //   ).catch((error: Error) => this.loggerService.error(error.message));
+
+    // use async function instead of .then().catch():
+    this.getAuthorRecommendationAsync(1);
+    // alternative with in-line async function catch:
+    //.catch(err => {})
+  }
+
+  private async getAuthorRecommendationAsync(readerID: number): Promise<void> {
+    try {
+      let author: string = await this.dataService.getAuthorRecommendation(readerID);
+      this.loggerService.log(author);
+    } catch (error) {
+      this.loggerService.error((<Error>error).message);
+    }
   }
 
   deleteBook(bookID: number): void {
