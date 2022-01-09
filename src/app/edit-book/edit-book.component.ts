@@ -8,7 +8,11 @@ import { Book } from 'app/models/book';
 @Component({
   selector: 'app-edit-book',
   templateUrl: './edit-book.component.html',
-  styles: []
+  styles: [],
+  // if another DataService is provided in the module,
+  // without the @Injectable({ providedIn: 'root' }) in the service
+  // then below will create a second instance of the service:
+  // providers: [DataService]
 })
 export class EditBookComponent implements OnInit {
 
