@@ -30,6 +30,16 @@ export class DashboardComponent implements OnInit {
       () => this.loggerService.log(`Function: getAllReaders() done.`)
     );    
     this.mostPopularBook = this.dataService.mostPopularBook;
+
+    this.dataService.getAuthorRecommendation(1)
+      .then(
+        (author: string) => {
+          this.loggerService.log(author);
+          // Uncomment to simulate an error:
+          //throw new Error('There was a problem!');
+        },
+        (err: string) => this.loggerService.error(`Promise rejected: ${err}`)
+      ).catch((error: Error) => this.loggerService.error(error.message));
   }
 
   deleteBook(bookID: number): void {
